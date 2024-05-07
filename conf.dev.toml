@@ -1,0 +1,45 @@
+[cassandra]
+name = "cassync"
+# cassandra
+hosts = ["10.8.14.226"]
+#scylla
+#hosts = ["10.8.13.207"]
+port = 9042
+keyspace = "kingtalk"
+timeout = "10s"
+connectTimeout = "10s"
+username = "root"
+password = "Mysohapass"
+
+[mysql]
+name = "immaster"
+host = "localhost"
+port = 19000
+username = "root"
+password = "Mysohapass"
+database = "kingTalk"
+active = 500
+idle = 400
+lifetime = 10
+
+[mysqlmaster]
+name = "immaster"
+host = "localhost"
+port = 19002
+username = "root"
+password = "Mysohapass"
+database = "kingTalk"
+active = 500
+idle = 400
+lifetime = 10
+
+[mysqldes]
+name = "des"
+host = "localhost"
+port = 19001
+username = "root"
+password = "Mysohapass"
+database = "devtalk"
+active = 250
+idle = 250
+lifetime = 300
