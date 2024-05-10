@@ -28,6 +28,10 @@ func (p *Pool) Listener() {
 			klog.Infof("Worker %d started", i)
 			for job := range p.JobQueue {
                 job.Run()
+				
+				if job.Err != nil {
+					klog.Errorf("- Job %d error: %s", i, job.Err)
+				}
                 p.Wait.Done()
 			}
 		}(i)

@@ -60,7 +60,7 @@ func GenerateChatsDO() model.ChatsDO {
 
 func GenerateChannelsDO() model.ChannelsDO {
 	return model.ChannelsDO{
-		ID:               int32(RandomInt(1, 1000)),
+		ID:               int32(RandomInt(1, 100)),
 		CreatorUserID:    int32(RandomInt(1, 100)),
 		AccessHash:       int64(RandomInt(1, 100)),
 		RandomID:         int64(RandomInt(1, 100)),
@@ -87,14 +87,14 @@ func GenerateChannelsDO() model.ChannelsDO {
 
 func GenerateMessageDataDO() model.MessageDataDO {
 	return model.MessageDataDO{
-		ID:              int32(RandomInt(1, 1000)),
-		MessageDataID:   int64(RandomInt(1, 100)),
-		DialogID:        int64(RandomInt(1, 100)),
-		DialogMessageID: int32(RandomInt(1, 100)),
-		SenderUserID:    int32(RandomInt(1, 100)),
-		PeerType:        int8(RandomInt(1, 100)),
-		PeerID:          int32(RandomInt(1, 100)),
-		RandomID:        int64(RandomInt(1, 100)),
+		ID:              int32(RandomInt(200, 210)),
+		MessageDataID:   int64(RandomInt(100, 2000)),
+		DialogID:        int64(RandomInt(100, 2000)),
+		DialogMessageID: int32(RandomInt(100, 2000)),
+		SenderUserID:    int32(RandomInt(100, 2000)),
+		PeerType:        int8(RandomInt(100, 200)),
+		PeerID:          int32(RandomInt(100, 2000)),
+		RandomID:        int64(RandomInt(100, 2000)),
 		MessageType:     int8(RandomInt(1, 100)),
 		MessageData:     RandomString(10),
 		MediaUnread:     int8(RandomInt(1, 100)),

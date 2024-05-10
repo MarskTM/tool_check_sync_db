@@ -1,7 +1,7 @@
 package repository
 
 type Job struct {
-	Do  func() (error)
+	Do  func() error
 	Err error
 }
 

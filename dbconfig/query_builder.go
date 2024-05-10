@@ -10,16 +10,32 @@ func QueryBuilder(payload interface{}, tableName string) string {
 	reflectVal := reflect.ValueOf(payload)
 	reflectType := reflect.TypeOf(payload)
 
-	var isInsert bool
-
 	onDuplicateFields := []string{}
-	for i := 0; i < reflectType.NumField(); i++ {
+	
+	var isInsert bool
+	if reflectType.Field(0).Tag.Get("cql") == "id" && reflectVal.Field(0).Interface().(int32) == 0 {
+		isInsert = true
+	} else {
+		isInsert = false
+	}
+
+	// Pass id field by using i = 1
+	for i := 1; i < reflectType.NumField(); i++ {
 		tempField := reflectType.Field(i).Tag.Get("cql")
 		tempVal := fmt.Sprintf("%v", reflectVal.Field(i).Interface())
 
-		if tempField == "id" && reflectVal.Field(i).Interface().(int32) == 0 {
-			isInsert = true
-			continue
+		// Check uniqed fields when updates
+		switch tableName {
+		case "auth_users":
+		case "chats":
+		case "channels":
+			if tempField == "migrated_from" && !isInsert {
+				continue
+			}
+		case "message_data":
+			if (tempField == "message_data_id" || tempField == "dialog_id" || tempField == "dialog_message_id" || tempField == "sender_user_id" || tempField == "random_id") && !isInsert {
+				continue
+			}
 		}
 
 		if tempField == "created_at" || tempField == "updated_at" || tempField == "" || tempVal == "" {
@@ -37,7 +53,7 @@ func QueryBuilder(payload interface{}, tableName string) string {
 	if isInsert {
 		query += "INSERT INTO " + tableName + " SET " + strings.Join(onDuplicateFields, ",") + " ON DUPLICATE KEY UPDATE " + strings.Join(onDuplicateFields, ",") + ";"
 	} else {
-		query += "UPDATE " + tableName + " SET " + strings.Join(onDuplicateFields, ",") + " WHERE id = " + fmt.Sprintf("%v", reflectVal.Field(0).Interface()) + ";"
+		query += "UPDATE " + tableName + " SET " + strings.Join(onDuplicateFields, ",") + " WHERE id = " + fmt.Sprintf("%v", reflectVal.Field(0).Interface().(int32)) + ";"
 	}
 
 	return query
