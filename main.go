@@ -65,7 +65,10 @@ func main() {
 	klog.Infof(">> Start check data in db destination")
 
 	// Start check data in db destination
-	CheckDataInsert()
+	/*
+		v1.0.0.1: Bug - logic check didn't work properly true for now
+		// CheckDataInsert()
+	*/
 	CheckDataUpdate()
 	CheckDataDelete()
 	klog.Infof(">> End check data in db destination")
